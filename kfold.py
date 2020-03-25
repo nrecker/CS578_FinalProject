@@ -1,5 +1,6 @@
 import numpy as np
 import csv
+from sklearn.preprocessing import StandardScaler
 
 # Removes column labels
 # Replaces NA with median for that feature
@@ -76,19 +77,15 @@ def doctor(maxk):
         for file in outfiles:
             file.close()
         
-# Returns (Xtrain,ytrain, Xtest,ytest for a particular value of k
+# Returns (Xtrain,ytrain, Xval,yval, Xtest,ytest for a particular value of k
 # Requires that doctor() has previously been called to generate the necessary files
-# Xtrain's dimensions are (n*9/10, d) where n,d are number of samples and number of features
-# ytrain's dimensions are (n*9/10, 1)
-# Xtest's dimensions are (n/10, d)
-# ytest's dimensions are (n/10, 1)
-def getdata(k):
+def getdata(k, maxk):
     n = 105471
     d = 769
 
     # Read data
     X = np.empty((n,d))
-    y = np.empty((n,1))
+    y = np.empty(n)
     with open('train_v2_doctored_'+str(k)+'.csv',newline='') as file:
         datareader = csv.reader(file, delimiter=',', quotechar='|', quoting=csv.QUOTE_NONNUMERIC)
         i = 0
@@ -97,7 +94,27 @@ def getdata(k):
             y[i] = row[-1]
             i += 1
     
+    y[y > 0] = 1
+    
     testStart = n - (n // 10)
-    return X[:testStart], y[:testStart],  X[testStart:], y[testStart:]
+    kStart = (testStart//maxk)*k
+    
+    Xtrain = np.concatenate((X[:kStart], X[kStart+testStart//maxk:testStart]))
+    scaler = StandardScaler()
+    scaler.fit(Xtrain)
+    X = scaler.transform(X)
+    
+    Xtrain = np.concatenate((X[:kStart], X[kStart+testStart//maxk:testStart]))
+    ytrain = np.concatenate((y[:kStart], y[kStart+testStart//maxk:testStart]))
+    if k==maxk-1:
+        Xval = X[kStart:testStart]
+        yval = y[kStart:testStart]
+    else:
+        Xval = X[kStart:kStart+testStart//maxk]
+        yval = y[kStart:kStart+testStart//maxk]
+    Xtest = X[testStart:]
+    ytest = X[testStart:]
+        
+    return Xtrain,ytrain, Xval,yval, Xtest,ytest
 
 # doctor(10)
