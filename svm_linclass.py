@@ -21,7 +21,7 @@ def preprocessData(data):
     return data
 
 
-data =pd.read_csv('/home/anirban/cs578/Final_project/loan-default-prediction/train_v2.csv')
+data =pd.read_csv('train_v2.csv')
 
 #Create 10k data for just doing whatever. Not sure if this is a good ML approach 
 #Correct me wherever you feel like . Here I am just trying to see how good accuraccy we get for just classification
@@ -29,8 +29,10 @@ data =pd.read_csv('/home/anirban/cs578/Final_project/loan-default-prediction/tra
 a=np.arange(105470)
 np.random.shuffle(a)
 
-reduced_train_data = data.iloc[a[0:10000]]
-reduced_test_data = data.iloc[a[10000:20000]]
+#reduced_train_data = data.iloc[a[0:10000]]
+#reduced_test_data = data.iloc[a[10000:20000]]
+
+[reduced_train_data, reduced_val_data, reduced_test_data] = getdata(0, 10, data)
 
 #Training with linear SVM
 reduced_train_data = preprocessData(reduced_train_data)
@@ -42,9 +44,9 @@ svm_linear = Pipeline([
 svm_linear.fit(X,y)
 
 
-reduced_test_data = preprocessData(reduced_test_data)
-X_test= reduced_test_data.drop(columns=['loss', 'id'])
-y_test= reduced_test_data['loss']
+reduced_val_data = preprocessData(reduced_val_data)
+X_test= reduced_val_data.drop(columns=['loss', 'id'])
+y_test= reduced_val_data['loss']
 y_pred= svm_linear.predict(X_test)
 
 print (sum(abs(y_test-y_pred)))
