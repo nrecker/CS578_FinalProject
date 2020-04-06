@@ -71,8 +71,8 @@ def preprocessData_linreg(data):
 #**********************************************************************************
 data =pd.read_csv('/home/anirban/cs578/Final_project/loan-default-prediction/train_v2.csv')
 a=np.arange(105470)
-reduced_val_data = data.iloc[a[20000:40000]]
-reduced_train_data = data.iloc[a[40000:80000]]
+reduced_val_data = data.iloc[a[80000:100000]]
+reduced_train_data = data.iloc[a[10000:60000]]
 #Not using index.rest might cause some weird problems. Index for reduced_val_data
 # for reduced_val_data = data.iloc[a[20000:40000]] starts from 20k
 reduced_val_data=reduced_val_data.reset_index(drop=True)
@@ -98,7 +98,7 @@ svm_linear = Pipeline([
         ("scaler", StandardScaler()),
         ("pca", PCA(n_components=50)),
         #("linear_svc", svm.LinearSVC(C=10, penalty="l2", max_iter= 1000, dual=False))])
-        ('linear_svc', svm.SVC(kernel="poly", C=0.1, degree=2, coef0=1, cache_size=1000))]) #
+        ('linear_svc', svm.SVC(kernel="poly", C=1, degree=2, coef0=2, cache_size=1000))]) #
 svm_linear.fit(X_new,y_classf)
 
 
