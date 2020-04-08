@@ -19,32 +19,35 @@ def preprocessData(data):
 
 
 data =pd.read_csv('train_v2.csv')
+estimators = 50
+rate = 1
+k =10
+#pca_features = 40 #Use only when using PCA
 
-print(len(data))
-a=np.arange(len(data))
-#np.random.shuffle(a)
+for k_current in range(k):
 
-#reduced_train_data = data.iloc[a[0:10000]]
-#reduced_test_data = data.iloc[a[10000:20000]]
+    [reduced_train_data, reduced_val_data, reduced_test_data] = getdata(0, 10, data)
 
-[reduced_train_data, reduced_val_data, reduced_test_data] = getdata(0, 10, data)
-
-#Training with linear SVM
-reduced_train_data = preprocessData(reduced_train_data)
-X= reduced_train_data.drop(columns=['loss', 'id'])     #Since loss and id arent part of features
-y= reduced_train_data['loss']
-#svm_linear = Pipeline([
-#        ("scaler", MinMaxScaler()),
-#        ("linear_svc", svm.LinearSVC(C=10, loss='squared_hinge', tol=1e-3, max_iter= 2000, dual=False))])
-adaboost = AdaBoostRegressor(n_estimators=50, learning_rate=1)
-adaboost.fit(X,y)
+    #Training with adabost
+    reduced_train_data = preprocessData(reduced_train_data)
+    X= reduced_train_data.drop(columns=['loss', 'id'])     #Since loss and id arent part of features
+    y= reduced_train_data['loss']
+    #svm_linear = Pipeline([
+    #        ("scaler", MinMaxScaler()),
+    #        ("linear_svc", svm.LinearSVC(C=10, loss='squared_hinge', tol=1e-3, max_iter= 2000, dual=False))])
+    adaboost = Pipeline([
+            #("pca", PCA(n_components=pca_features)),
+            ('adaboost',AdaBoostRegressor(n_estimators=estimators, learning_rate=rate))])
+    adaboost.fit(X,y)
 
 
-reduced_val_data = preprocessData(reduced_val_data)
-X_test= reduced_val_data.drop(columns=['loss', 'id'])
-y_test= reduced_val_data['loss']
-y_pred= adaboost.predict(X_test)
-
-print (sum(abs(y_test-y_pred)))
-print (len(np.where(y_test == 1)[0]))    #Place where loss is > 0  
+    reduced_val_data = preprocessData(reduced_val_data)
+    X_test= reduced_val_data.drop(columns=['loss', 'id'])
+    y_test= reduced_val_data['loss']
+    y_pred= adaboost.predict(X_test)
+    accuracy = getScore(y_pred, y_test)
+    accuracyArr.append(accuracy)
+    
+mean, variance = getkFoldScore(accuracyArr)
+print (mean, variance)
 
