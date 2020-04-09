@@ -18,7 +18,7 @@ def getScore(y, y_pred):
         print ('Length mismatch error!')
         return -1
     #This competition is evaluated on the mean absolute error (MAE)
-    score = len(np.where (y != y_pred)[0])
+    score = np.mean(np.abs(y-y_pred))
     return score
 
 #Takes an array of mae scores for all ks for a given algorithm 
