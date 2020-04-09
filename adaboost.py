@@ -9,6 +9,7 @@ from sklearn import preprocessing
 from sklearn.ensemble import AdaBoostRegressor
 
 from kfold import *
+from score import *
 
 #Preprocessing function 
 def preprocessData(data):
@@ -22,6 +23,7 @@ data =pd.read_csv('train_v2.csv')
 estimators = 50
 rate = 1
 k =10
+accuracyArr =[]
 #pca_features = 40 #Use only when using PCA
 
 for k_current in range(k):
