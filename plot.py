@@ -14,6 +14,7 @@ def roc(pipeline, X_test, y_test):
     threshes = y_pred.copy()
     threshes.sort()
     
+    # Calculate True positive and False positive
     tp = np.zeros(threshes.size+1)
     fp = np.zeros(threshes.size+1)
     for i in range(threshes.size):
@@ -26,11 +27,17 @@ def roc(pipeline, X_test, y_test):
     tp = tp/sum(y_test == 1)
     fp = fp/sum(y_test == 0)
     
-    plt.plot(tp,fp)
-    plt.xlabel("True positive rate")
-    plt.ylabel("False positive rate")
+    # Plot ROC curve
+    plt.plot(fp,tp)
+    plt.xlabel("False positive rate")
+    plt.ylabel("True positive rate")
     plt.show()
-
+    
+    # Calculate AUROC
+    area = 0
+    for i in range(tp.size-1):
+        area += (tp[i]+tp[i+1])/2 * (fp[i+1]-fp[i])   # Trapezoidal approximation
+    return area
 
 #testing code from here down
 def preprocessData(data):
@@ -53,4 +60,4 @@ svm_linear.fit(X,y)
 reduced_val_data = preprocessData(reduced_val_data)
 X_test= reduced_val_data.drop(columns=['loss', 'id'])
 y_test= reduced_val_data['loss']
-roc(svm_linear, X_test, y_test)
+print( roc(svm_linear, X_test, y_test) )
