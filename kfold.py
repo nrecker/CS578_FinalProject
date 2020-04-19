@@ -34,4 +34,4 @@ def getdata(k, maxk, data, kFold_flag = 1):
         return train,test
 
 #testing code
-#[a,b,c] = getdata(2,10,pd.read_csv('train_v2.csv'))
+[a,b,c] = getdata(2,10,pd.read_csv('train_v2.csv'))
