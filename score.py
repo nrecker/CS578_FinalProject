@@ -31,4 +31,7 @@ def getkFoldScore(scoreArr):
     
     return mean, variance
     
-    
+def getbias_var(y_actual, y_pred):
+    biasSq = (np.mean(y_actual) - np.mean(y_pred))**2    
+    variance = np.std(y_pred) **2
+    return biasSq,variance    
