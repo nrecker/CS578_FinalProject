@@ -6,7 +6,7 @@ import numpy as np
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import MinMaxScaler
 from sklearn import preprocessing
-from sklearn.ensemble import AdaBoostRegressor
+from sklearn.ensemble import AdaBoostClassifier
 
 from kfold import *
 from score import *
@@ -38,7 +38,7 @@ for k_current in range(k):
     #        ("linear_svc", svm.LinearSVC(C=10, loss='squared_hinge', tol=1e-3, max_iter= 2000, dual=False))])
     adaboost = Pipeline([
             #("pca", PCA(n_components=pca_features)),
-            ('adaboost',AdaBoostRegressor(n_estimators=estimators, learning_rate=rate))])
+            ('adaboost',AdaBoostClassifier(n_estimators=estimators, learning_rate=rate))])
     adaboost.fit(X,y)
 
 
