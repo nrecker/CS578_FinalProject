@@ -34,16 +34,36 @@ Adaboost:
 Plotting ROC:
 	For SVM(plot_SVM.py):
 	Comment out all of the lines in this section except one of them
-	("linear_svc", svm.LinearSVC(C=1, loss='squared_hinge', tol=1e-3, max_iter=1000, dual=False))])
-        #('linear_svc', svm.SVC(kernel="rbf",C=1, max_iter= 1000))])
-        #('linear_svc', svm.SVC(kernel="poly",degree=2,C=10, max_iter= 1000))])
+		("linear_svc", svm.LinearSVC(C=1, loss='squared_hinge', tol=1e-3, max_iter=1000, dual=False))])
+        	#('linear_svc', svm.SVC(kernel="rbf",C=1, max_iter= 1000))])
+        	#('linear_svc', svm.SVC(kernel="poly",degree=2,C=10, max_iter= 1000))])
 	For example for linear SVM do the above. For polynomial SVM comment out lines 1 and 2 and uncomment 3. Change the
 	values of C or degree as needed. Takes a while to run.
 	Also prints area under the various curves
 	
 	Adaboost (plot.py):
 	Change no of estimators in this line
-	estimators = 30
+		estimators = 30
 	Also prints area under the various curves
+	
+Bias and Variance:
+	
+	For SVM(bias_variance_svm.py):
+	Comment out all of the lines in this section except one of them
+		#("linear_svc", svm.LinearSVC(C=1, loss='squared_hinge', tol=1e-3, max_iter= 1000, dual=False))])
+        	('linear_svc', svm.SVC(kernel="rbf", C=1,  max_iter= 1000,))])
+        	#('linear_svc', svm.SVC(kernel="poly", C=1,  degree= 2, max_iter= 1000))])
+	For example for radial basis function kernel SVM do the above. Also change C and degress as required
+	To vary no of features change 
+		pca_features = 50
+	
+	For Adaboost(bias_variance_adaboost.py):
+		estimators = 50
+		rate =0.01
+	Change the values in the above 2 lines if necessary
+	To vary no of features change 
+		pca_features = 50
+	
+	
 	
 	
