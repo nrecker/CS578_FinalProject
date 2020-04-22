@@ -48,16 +48,11 @@ def preprocessData(data):
     data.loc[(data.loss > 0),'loss'] = 1         #Replace all values >0 in loss by 1
     return data 
 
-####Uncomment for SVM and comment for Adaboost####
-#pca_comp=[750,50,25,10]
-#names =['All features', '50 features','25 features','10 features']
-#size=4
-#####################################
-####Uncomment for Adaboost and comment for SVM####
+
 learning_rates=[0.1,0.01, 0.001]
 names =['Rate=0.1', 'Rate=0.01','Rate=0.001']
+estimators = 30
 size=3
-#################################################
 areaArr=[]
 color = ['b-', 'g-', 'r-', 'y-']
 for j in range(size):  
@@ -66,18 +61,10 @@ for j in range(size):
     reduced_train_data = preprocessData(reduced_train_data)
     X= reduced_train_data.drop(columns=['loss', 'id'])     #Since loss and id arent part of features
     y= reduced_train_data['loss']
-# =============================================================================
-#     svm_linear = Pipeline([
-#             ("scaler", MinMaxScaler()),
-#             ("pca", PCA(n_components=pca_comp[j])),
-#             ("linear_svc", svm.LinearSVC(C=1, loss='squared_hinge', tol=1e-3, max_iter=1000, dual=False))])
-#             #('linear_svc', svm.SVC(kernel="rbf",C=1, max_iter= 1000))])
-#             #('linear_svc', svm.SVC(kernel="poly",degree=2,C=10, max_iter= 1000))])
-#     svm_linear.fit(X,y)
-# =============================================================================
+
     adaboost = Pipeline([
             ("pca", PCA(n_components=50)),
-            ('adaboost',AdaBoostClassifier(n_estimators=30, learning_rate=learning_rates[j]))])
+            ('adaboost',AdaBoostClassifier(n_estimators=estimators, learning_rate=learning_rates[j]))])
     adaboost.fit(X,y)
 
     
