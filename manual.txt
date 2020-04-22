@@ -55,7 +55,7 @@ Bias and Variance:
         	#('linear_svc', svm.SVC(kernel="poly", C=1,  degree= 2, max_iter= 1000))])
 	For example for radial basis function kernel SVM do the above. Also change C and degress as required
 	To vary no of features change 
-		pca_features = 50
+		pca_features = 25
 	
 	For Adaboost(bias_variance_adaboost.py):
 		estimators = 50
