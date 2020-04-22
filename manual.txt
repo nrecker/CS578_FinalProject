@@ -15,8 +15,12 @@ All Features SVM:
 		in svm_polyclass.py, ensure that the lines that mention PCA are commented out
 			(they should already be commented out in the code we provided)
 		on the following line in svm_polyclass.py, set C and kernel to the desired values
-			("linear_svc", svm.LinearSVC(C=1, loss='squared_hinge', tol=1e-3, max_iter= 1000000, dual=False))])
-		run svm_polyclass.py
+			('linear_svc', svm.SVC(kernel="poly", C=1, degree=degree,max_iter= 1000))])
+			('linear_svc', svm.SVC(kernel="rbf", C=1, max_iter= 1000))])
+		run svm_polyclass.py. Comment out one of the lines. Both cannot be used at once. For radial basis function 
+		comment out the frist line and for polynoimal kernels the second line
+		Degree can be set at 
+		degree = 2 
 PCA feature-reduced SVM:
 	same as All features SVM, except uncomment the following two lines:
 		# pca_features = 50 #Use only when using PCA
@@ -26,3 +30,20 @@ Adaboost:
 	Set estimators and rate to the desired values on these lines:
 		estimators = 50
 		rate = 0.1
+		
+Plotting ROC:
+	For SVM(plot_SVM.py):
+	Comment out all of the lines in this section except one of them
+	("linear_svc", svm.LinearSVC(C=1, loss='squared_hinge', tol=1e-3, max_iter=1000, dual=False))])
+        #('linear_svc', svm.SVC(kernel="rbf",C=1, max_iter= 1000))])
+        #('linear_svc', svm.SVC(kernel="poly",degree=2,C=10, max_iter= 1000))])
+	For example for linear SVM do the above. For polynomial SVM comment out lines 1 and 2 and uncomment 3. Change the
+	values of C or degree as needed. Takes a while to run.
+	Also prints area under the various curves
+	
+	Adaboost (plot.py):
+	Change no of estimators in this line
+	estimators = 30
+	Also prints area under the various curves
+	
+	
