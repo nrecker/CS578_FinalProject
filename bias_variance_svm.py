@@ -10,6 +10,7 @@ import pandas as pd
 import numpy as np
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import MinMaxScaler
+from sklearn.ensemble import AdaBoostClassifier
 from sklearn.decomposition import PCA
 from sklearn import preprocessing
 from sklearn import svm
@@ -35,11 +36,14 @@ pca_features = 25 #Use only when using PCA
 reduced_train_data = preprocessData(reduced_train_data)
 X= reduced_train_data.drop(columns=['loss', 'id'])     #Since loss and id arent part of features
 y= reduced_train_data['loss']
+
 svm_linear = Pipeline([
         ("scaler", MinMaxScaler()),
         ("pca", PCA(n_components=pca_features)),
         #("linear_svc", svm.LinearSVC(C=1, loss='squared_hinge', tol=1e-3, max_iter= 1000, dual=False))])
-        ('linear_svc', svm.SVC(kernel="rbf", C=1,  max_iter= 1000, random_state=1))])
+        ('linear_svc', svm.SVC(kernel="rbf", C=1,  max_iter= 1000,))])
+        #('linear_svc', svm.SVC(kernel="poly", C=1,  degree= 2, max_iter= 1000))])
+    
 svm_linear.fit(X,y)
 
 #For bias and variance of test data
@@ -49,13 +53,12 @@ y_test= reduced_test_data['loss']
 y_pred= svm_linear.predict(X_test)
 
 
-print (getbias_var(y_test, y_pred))
+print ('Test Data Bias Sq and Variance = '+str(getbias_var(y_test, y_pred)))
 #For bias and variance of training data
-# =============================================================================
-# y_pred= svm_linear.predict(X)
-# 
-# biasSq =( np.mean(y) - np.mean(y_pred))**2
-# variance = np.std(y_pred) **2
-# print (biasSq,variance)
-# =============================================================================
+y_pred= svm_linear.predict(X)
+
+biasSq =( np.mean(y) - np.mean(y_pred))**2
+variance = np.std(y_pred) **2
+print ('Training Data Bias Sq and Variance = '+str(biasSq) + ' '+str(variance))
+
 
