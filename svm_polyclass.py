@@ -55,7 +55,8 @@ for k_current in range(k):
     svm_linear = Pipeline([
             ("scaler", MinMaxScaler()),
             #("pca", PCA(n_components=pca_features)),
-            ('linear_svc', svm.SVC(kernel="poly", C=1, degree=degree, coef0=2, max_iter= 10))])
+            #('linear_svc', svm.SVC(kernel="rbf", C=1, max_iter= 1000))])
+            ('linear_svc', svm.SVC(kernel="poly", C=1, degree=degree,max_iter= 1000))])
     svm_linear.fit(X,y)
     
     
