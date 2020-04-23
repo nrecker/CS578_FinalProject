@@ -34,7 +34,7 @@ def preprocessData(data):
     return data
 
 
-data =pd.read_csv('/home/anirban/cs578/Final_project/loan-default-prediction/train_v2.csv')
+data =pd.read_csv('train_v2.csv')
 k=10
 pca_features = 50 #Use only when using PCA
 estimators = 50

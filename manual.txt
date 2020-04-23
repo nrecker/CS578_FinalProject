@@ -3,6 +3,9 @@ Libraries:
 	pandas
 	sklearn
 	matplotlib
+	
+First copy the file "train_v2.csv" to the sources folder.
+All code should be run from the sources folder.
 
 All Features SVM:
 	Linear kernel(svm_linclass.py):

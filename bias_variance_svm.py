@@ -26,9 +26,9 @@ def preprocessData(data):
     return data
 
 
-data =pd.read_csv('/home/anirban/cs578/Final_project/loan-default-prediction/train_v2.csv')
+data =pd.read_csv('train_v2.csv')
 k=10
-pca_features = 25 #Use only when using PCA
+pca_features = 10 #Use only when using PCA
 
 [reduced_train_data, reduced_test_data] = getdata(-1, k, data, -1)
     
@@ -40,8 +40,8 @@ y= reduced_train_data['loss']
 svm_linear = Pipeline([
         ("scaler", MinMaxScaler()),
         ("pca", PCA(n_components=pca_features)),
-        #("linear_svc", svm.LinearSVC(C=1, loss='squared_hinge', tol=1e-3, max_iter= 1000, dual=False))])
-        ('linear_svc', svm.SVC(kernel="rbf", C=1,  max_iter= 1000,))])
+        ("linear_svc", svm.LinearSVC(C=1, loss='squared_hinge', tol=1e-3, max_iter= 1000, dual=False))])
+        #('linear_svc', svm.SVC(kernel="rbf", C=1,  max_iter= 1000,))])
         #('linear_svc', svm.SVC(kernel="poly", C=1,  degree= 2, max_iter= 1000))])
     
 svm_linear.fit(X,y)

@@ -56,7 +56,7 @@ size=3
 areaArr=[]
 color = ['b-', 'g-', 'r-', 'y-']
 for j in range(size):  
-    data =pd.read_csv('/home/anirban/cs578/Final_project/loan-default-prediction/train_v2.csv')
+    data =pd.read_csv('train_v2.csv')
     [reduced_train_data, reduced_test_data] = getdata(1, 10, data, -1)
     reduced_train_data = preprocessData(reduced_train_data)
     X= reduced_train_data.drop(columns=['loss', 'id'])     #Since loss and id arent part of features
