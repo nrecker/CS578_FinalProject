@@ -5,13 +5,13 @@ Libraries:
 	matplotlib
 
 All Features SVM:
-	Linear kernel:
+	Linear kernel(svm_linclass.py):
 		in svm_linclass.py, ensure that the lines that mention PCA are commented out
 			(they should already be commented out in the code we provided)
 		on the following line in svm_linclass.py, set C to the desired value
 			("linear_svc", svm.LinearSVC(C=1, loss='squared_hinge', tol=1e-3, max_iter= 1000000, dual=False))])
 		run svm_linclass.py
-	Other kernels:
+	Other kernels(svm_polyclass.py):
 		in svm_polyclass.py, ensure that the lines that mention PCA are commented out
 			(they should already be commented out in the code we provided)
 		on the following line in svm_polyclass.py, set C and kernel to the desired values
@@ -26,7 +26,7 @@ PCA feature-reduced SVM:
 		# pca_features = 50 #Use only when using PCA
 			also set pca_features to the desired value
 		# ("pca", PCA(n_components=pca_features)),
-Adaboost:
+Adaboost(adaboost.py):
 	Set estimators and rate to the desired values on these lines:
 		estimators = 50
 		rate = 0.1
@@ -63,7 +63,5 @@ Bias and Variance:
 	Change the values in the above 2 lines if necessary
 	To vary no of features change 
 		pca_features = 50
-	
-	
 	
 	
