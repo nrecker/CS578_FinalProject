@@ -54,11 +54,13 @@ Bias and Variance:
 	For SVM(bias_variance_svm.py):
 	Comment out all of the lines in this section except one of them
 		#("linear_svc", svm.LinearSVC(C=1, loss='squared_hinge', tol=1e-3, max_iter= 1000, dual=False))])
-        	('linear_svc', svm.SVC(kernel="rbf", C=1,  max_iter= 1000,))])
-        	#('linear_svc', svm.SVC(kernel="poly", C=1,  degree= 2, max_iter= 1000))])
+        ('linear_svc', svm.SVC(kernel="rbf", C=1,  max_iter= 1000,))])
+        #('linear_svc', svm.SVC(kernel="poly", C=1,  degree= 2, max_iter= 1000))])
 	For example for radial basis function kernel SVM do the above. Also change C and degress as required
-	To vary no of features change 
+	To vary number of features change 
 		pca_features = 25
+	For all-features comment out
+        #("pca", PCA(n_components=pca_features)),
 	
 	For Adaboost(bias_variance_adaboost.py):
 		estimators = 50
