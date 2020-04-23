@@ -57,8 +57,9 @@ print ('Test Data Bias Sq and Variance = '+str(getbias_var(y_test, y_pred)))
 #For bias and variance of training data
 y_pred= svm_linear.predict(X)
 
+mse = np.mean((y-y_pred)**2)
 biasSq =( np.mean(y) - np.mean(y_pred))**2
-variance = np.std(y_pred) **2
+variance = mse - biasSq
 print ('Training Data Bias Sq and Variance = '+str(biasSq) + ' '+str(variance))
 
 
