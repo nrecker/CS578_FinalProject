@@ -36,3 +36,4 @@ def getbias_var(y_actual, y_pred):
     biasSq = (np.mean(y_actual) - np.mean(y_pred))**2    
     variance = mse - biasSq
     return biasSq,variance    
+#Something
